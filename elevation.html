@@ -5,14 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>Mountain maker</h1>
+    <label for="location">Location</label>
+    <input type="text" class="location" name="location">
     <label for="coords">Coordinates</label>
     <input name="coords" type="text" class="coords">
+    <label for="scale">Scale (Kilometers)</label>
+    <input type="text" name="scale" class="scale" value="10">
+    <label for="pointiness">Pointiness (1-10)</label>
+    <input type="text" class="pointiness" name="pointiness" value="5">
+    <label for="lod">Level of detail (0-100)</label>
+    <input type="text" name="lod" class="lod" value="20">
     <button class="getElevation">Get elevation</button>
-    <h3>Elevation:</h3>
-    <table class="elevation"></table>
+    <div class="ct-chart ct-golden-section" id="chart1"></div>
+    <div class="placename"></div>
     <script src="app.js"></script>
 </body>
 </html>
