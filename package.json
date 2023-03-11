@@ -1,0 +1,22 @@
+{
+  "name": "elevation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tichaelmurvey/elevation_mapping_graph.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tichaelmurvey/elevation_mapping_graph/issues"
+  },
+  "homepage": "https://github.com/tichaelmurvey/elevation_mapping_graph#readme",
+  "dependencies": {
+    "netlify": "^13.1.2"
+  }
+}

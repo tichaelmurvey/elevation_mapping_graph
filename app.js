@@ -53,8 +53,8 @@ async function getElevationGrid(){
         }
         let latString = coordset.join("|");
         //fetchList.push('https://powerful-hollows-31672.herokuapp.com/https://api.opentopodata.org/v1/aster30m?locations='+latString);
-        fetchList.push('https://api.opentopodata.org/v1/aster30m?locations='+latString);
-        // fetchList.push('localhost:5000/v1/aster30m?locations='+latString);
+        //fetchList.push('https://api.opentopodata.org/v1/aster30m?locations='+latString);
+        fetchList.push('/api/'+latString);
     }
     getDataChunk(fetchList);
     intervalTracker = setInterval(getDataChunk, callDelay, fetchList);
