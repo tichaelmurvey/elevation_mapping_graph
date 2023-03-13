@@ -7,12 +7,13 @@ placenameField = document.querySelector(".placename");
 locationInput = document.querySelector(".location");
 
 let heightScale = 10;
-
+let myChart;
 let elevationGrid = [];
 
 elevationButton.addEventListener("click", getElevationData);
 
 async function getElevationData(){
+    document.querySelector("#chart1").style.display = "none";
     console.log("getting data");
     //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
     fetch(`http://localhost:3000/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
@@ -74,8 +75,9 @@ function updateGraph(elevationGrid){
     })
     console.log("staggered", elevationGraphStaggered)
 // Initialize a Line chart in the container with the ID chart
-    console.log("updating chart")
-    let myChart = new Chartist.Line('#chart1', {
+    console.log("updating chart");
+    document.querySelector("#chart1").style.display = "block";
+    myChart = new Chartist.Line('#chart1', {
     series: elevationGraphStaggered
         },{
     fullWidth: false,
@@ -94,3 +96,13 @@ function updateGraph(elevationGrid){
   });
   placenameField.textContent = locationInput.value;
  }
+
+ function downloadSVG() {
+    const svg = document.getElementById('container').innerHTML;
+    const blob = new Blob([svg.toString()]);
+    const element = document.createElement("a");
+    element.download = "w3c.svg";
+    element.href = window.URL.createObjectURL(blob);
+    element.click();
+    element.remove();
+  }
