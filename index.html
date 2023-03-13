@@ -23,7 +23,45 @@
     <label for="lod">Level of detail (0-100)</label>
     <input type="text" name="lod" class="lod" value="20">
     <button class="getElevation">Get elevation</button>
-    <div class="ct-chart ct-golden-section" id="chart1"></div>
+    <div class="ct-chart ct-golden-section" id="chart1">
+        <div class="screen"></div>
+    </div>
+    <div class="loading">
+        <div class="hypnotic"></div>
+        <style>
+        .hypnotic {
+        width: 56px;
+        height: 56px;
+        border: 2.2px solid #ffffff;
+        display: grid;
+        animation: hypnotic-q3fddx 4s infinite linear;
+        }
+
+        .hypnotic::before,
+        .hypnotic::after {
+        content: "";
+        grid-area: 1/1;
+        margin: auto;
+        width: 70.7%;
+        height: 70.7%;
+        border: 2.2px solid #ffffff;
+        animation: inherit;
+        }
+
+        .hypnotic::after {
+        width: 50%;
+        height: 50%;
+        border: 2.2px solid #ffffff;
+        animation-duration: 2s;
+        }
+
+        @keyframes hypnotic-q3fddx {
+        100% {
+            transform: rotate(1turn);
+        }
+        }
+        </style>
+    </div>
     <div class="placename"></div>
     <script src="app.js"></script>
 </body>

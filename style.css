@@ -37,10 +37,21 @@ h1 {
 
 #chart1 {
     background-color: black;
+    position: relative;
     max-width: 70%;
     margin: auto;
+    /* transform: scaleX(0); */
 }
 
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 2;
+    transform-origin: right;
+    animation: shrink-left cubic-bezier(0.785, 0.135, 0.15, 0.86) 1.5s forwards;
+}
 
 
 .ct-line {
@@ -52,3 +63,27 @@ h1 {
 .hide {
     stroke: purple !important;
 }
+
+.loading {
+    width: min-content;
+    margin: 200px auto;
+}
+
+@keyframes grow-left {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  
+@keyframes shrink-left {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }

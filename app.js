@@ -11,9 +11,11 @@ let myChart;
 let elevationGrid = [];
 
 elevationButton.addEventListener("click", getElevationData);
+document.querySelector(".loading").style.display = "none";
 
 async function getElevationData(){
     document.querySelector("#chart1").style.display = "none";
+    document.querySelector(".loading").style.display = "block";
     console.log("getting data");
     //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
     fetch(`http://localhost:3000/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
@@ -76,7 +78,6 @@ function updateGraph(elevationGrid){
     console.log("staggered", elevationGraphStaggered)
 // Initialize a Line chart in the container with the ID chart
     console.log("updating chart");
-    document.querySelector("#chart1").style.display = "block";
     myChart = new Chartist.Line('#chart1', {
     series: elevationGraphStaggered
         },{
@@ -94,6 +95,8 @@ function updateGraph(elevationGrid){
         showLabel: true
       }
   });
+  document.querySelector("#chart1").style.display = "block";
+  document.querySelector(".loading").style.display = "none";
   placenameField.textContent = locationInput.value;
  }
 
