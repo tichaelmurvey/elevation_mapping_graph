@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mountain Maker</title>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.umd.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗻</text></svg>">
@@ -23,9 +24,6 @@
     <label for="lod">Level of detail (0-100)</label>
     <input type="text" name="lod" class="lod" value="20">
     <button class="getElevation">Get elevation</button>
-    <div class="ct-chart ct-golden-section" id="chart1">
-        <div class="screen"></div>
-    </div>
     <div class="loading">
         <div class="hypnotic"></div>
         <style>
@@ -62,7 +60,12 @@
         }
         </style>
     </div>
-    <div class="placename"></div>
-    <script src="app.js"></script>
+    <div class="chartcontainer">
+    <canvas id="chart1"></canvas>
+    <button onClick="downloadImage()">Download</button>
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="frommountains" data-color="#080808" data-emoji=""  data-font="Poppins" data-text="BUY ME A COFFEE" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+
+</div>
 </body>
+<script src="app.js"></script>
 </html>

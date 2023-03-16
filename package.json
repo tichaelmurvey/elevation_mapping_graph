@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tichaelmurvey/elevation_mapping_graph#readme",
   "dependencies": {
+    "html2canvas": "^1.4.1",
     "netlify": "^13.1.2"
   }
 }

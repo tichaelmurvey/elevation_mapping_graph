@@ -6,15 +6,36 @@ lodInput = document.querySelector(".lod");
 placenameField = document.querySelector(".placename");
 locationInput = document.querySelector(".location");
 
+//Chart.defaults.color = '#000';
+Chart.defaults.elements.point.pointStyle = false;
+Chart.defaults.elements.line.tension = 0.3;
+Chart.defaults.elements.line.borderWidth = 1;
+Chart.defaults.plugins.legend.display = false;
+Chart.defaults.color = '#FFF';
+Chart.defaults.backgroundColor = '#000';
+
+const canvasbackground = {
+  id: 'customCanvasBackgroundColor',
+  beforeDraw: (chart, args, options) => {
+    const {ctx} = chart;
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = options.color || '#99ffff';
+    ctx.fillRect(0, 0, chart.width, chart.height);
+    ctx.restore();
+  }
+};
+
 let heightScale = 10;
 let myChart;
 let elevationGrid = [];
 
 elevationButton.addEventListener("click", getElevationData);
 document.querySelector(".loading").style.display = "none";
+document.querySelector(".chartcontainer").style.display = "none";
 
 async function getElevationData(){
-    document.querySelector("#chart1").style.display = "none";
+    document.querySelector(".chartcontainer").style.display = "none";
     document.querySelector(".loading").style.display = "block";
     console.log("getting data");
     //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
@@ -77,35 +98,95 @@ function updateGraph(elevationGrid){
     })
     console.log("staggered", elevationGraphStaggered)
 // Initialize a Line chart in the container with the ID chart
+    buildChart(elevationGraphStaggered);
     console.log("updating chart");
-    myChart = new Chartist.Line('#chart1', {
-    series: elevationGraphStaggered
-        },{
-    fullWidth: false,
-    showPoint: false,
-    low: 0,
-    high: numPoints*lineOffset+highestPoint*heightScale,
-    showArea: true,
-    axisX: {
-        showGrid: false,
-        showLabel: true
-      },
-      axisY: {
-        showGrid: false,
-        showLabel: true
-      }
-  });
-  document.querySelector("#chart1").style.display = "block";
+  document.querySelector(".chartcontainer").style.display = "block";
   document.querySelector(".loading").style.display = "none";
-  placenameField.textContent = locationInput.value;
  }
 
- function downloadSVG() {
-    const svg = document.getElementById('container').innerHTML;
-    const blob = new Blob([svg.toString()]);
-    const element = document.createElement("a");
-    element.download = "w3c.svg";
-    element.href = window.URL.createObjectURL(blob);
-    element.click();
-    element.remove();
-  }
+  function buildChart(data) {
+      let title = locationInput.value.toUpperCase();
+      if(myChart){
+        myChart.destroy();
+      }
+      myChart = new Chart(
+        document.getElementById('chart1'),
+        {
+          type: 'line',
+          options: {
+            events: [],
+            scales: {
+              x: {
+                display: false
+              },
+              y: {
+                display: false,
+                position: 'center',
+              }
+            },        
+            plugins: {
+              customCanvasBackgroundColor: {
+                color: '#000',
+              },        
+              title: {
+                display: true,
+                text: title,
+                position: 'bottom',
+                fullsize: false,
+                font: {
+                  size: getFontSize(title, document.querySelector(".chartcontainer").offsetWidth, 'TeXGyreHeros'),
+                  family: "'TeXGyreHeros', sans-serif",
+                  weight: 'normal'
+              }
+              }
+            },
+        
+            responsive: true,        
+            aspectRatio: 1,
+            elements: {
+            point: {
+                pointstyle: false
+            }
+          }
+        },
+        plugins: [canvasbackground],
+        data: {
+            datasets: data.reverse().map(dataset => {
+                return {
+                    data: dataset, 
+                    borderColor: '#FFF',
+                    fill: {
+                        target: 'origin',
+                        above: 'rgb(0, 0, 0)'
+                      }
+                }
+            }),
+            labels: data[0].map((point, index) => {return index} )
+          }
+        }
+      );
+    }
+    
+
+
+    getFontSize = function (text, targetWidth, font) { 
+      console.log(text, targetWidth, font);
+      var c = document.querySelector("canvas");
+      var ctx = c.getContext("2d");
+      var size = 1; 
+      ctx.font = size + 'px ' + font; 
+      while (ctx.measureText(text).width < targetWidth && size < 100) { 
+        console.log(ctx.measureText(text).width);
+        size++; 
+        ctx.font = size + 'px ' + font; 
+      } 
+      return size; 
+    }
+
+    function downloadImage(){
+      var link = document.createElement('a');
+      link.download = `${locationInput.value}.png`;
+      link.href = document.querySelector('canvas').toDataURL()
+      link.click();
+    }
+    
