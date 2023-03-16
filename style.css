@@ -49,6 +49,12 @@ h1 {
   margin: auto;
 }
 
+@media screen and (max-width: 900px){
+  .chartcontainer {
+    width: 80%;
+  }
+}
+
 canvas {
   margin-top: 50px;
   margin-bottom: 30px;
