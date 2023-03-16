@@ -98,10 +98,10 @@ function updateGraph(elevationGrid){
     })
     console.log("staggered", elevationGraphStaggered)
 // Initialize a Line chart in the container with the ID chart
+document.querySelector(".chartcontainer").style.display = "block";
+document.querySelector(".loading").style.display = "none";
     buildChart(elevationGraphStaggered);
     console.log("updating chart");
-  document.querySelector(".chartcontainer").style.display = "block";
-  document.querySelector(".loading").style.display = "none";
  }
 
   function buildChart(data) {

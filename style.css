@@ -45,8 +45,13 @@ h1 {
 
 
 .chartcontainer{
-  width: 500px;
+  width: 800px;
   margin: auto;
+}
+
+canvas {
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .hide {
@@ -82,3 +87,7 @@ h1 {
     border-radius: 6px !important;
     font-weight: normal !important;
   }
+
+.downloadbutton {
+  margin-bottom: 50px;
+}
