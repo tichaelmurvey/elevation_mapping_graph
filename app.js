@@ -190,3 +190,28 @@ document.querySelector(".loading").style.display = "none";
       link.click();
     }
     
+    coordInput.onchange = function(){
+      updateLocation();
+    }
+
+    scaleInput.onchange = function(){
+      updateLocation();
+    }
+
+    async function updateLocation(){
+      let coords = coordInput.value.split(",")
+      let locationData = await fetch(`https://geocode.maps.co/reverse?lat=${coords[0].trim()}&lon=${coords[1].trim()}`)
+        .then((response) => response.json())
+        .then(data => {return data})
+      console.log(locationData);
+      if(scaleInput.value < 10){
+        console.log("hello world");
+        locationInput.value = locationData.address.suburb;
+      } else if(scaleInput.value < 100){
+        locationInput.value = locationData.address.city;
+      } else if(scaleInput.value < 1000){
+        locationInput.value = locationData.address.state;
+      } else {
+        locationInput.value = locationData.address.country;
+      }
+    }
