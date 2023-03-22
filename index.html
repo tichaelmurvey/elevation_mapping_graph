@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,14 +10,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.umd.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗻</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗻</text></svg>">
 </head>
+
 <body>
     <h1>Mountain maker</h1>
-    <label for="location">Location</label>
-    <input type="text" class="location" name="location">
-    <label for="coords">Coordinates</label>
-    <input name="coords" type="text" class="coords">
+    <p>Make a cool topographic map of anywhere on earth</p>
+    <p>for legal reasons it may or may not look like a certain album cover</p>
+    <div class="selectors">
+        <div>
+            <h2>Choose from pre-set locations</h2>
+            <select>
+                <option>New York City</option>
+                <option>Tokyo</option>
+                <option>San Francisco</option>
+                <option>Toronto</option>
+                <option>London</option>
+            </select>
+        </div>
+        <div>
+            <h2>Search using a place name</h2>
+            <label for="placesearch-location">Place name</label>
+            <input type="text" class="location" name="location" id="placesearch-location">
+            <label for="placesearch-coords">Coordinates</label>
+            <input name="coords" type="text" class="coords" id="placesearch-coords">
+
+        </div>
+        <div>
+            <h2>Search using coordinates</h2>
+            <label for="coordsearch-coords">Coordinates</label>
+            <input name="coords" type="text" class="coords" id="coordsearch-coords">
+            <label for="coordsearch-location">Place name</label>
+            <input type="text" class="location" name="location" id="coordsearch-location">
+        </div>
+    </div>
     <label for="scale">Scale (Kilometers)</label>
     <input type="text" name="scale" class="scale" value="10">
     <label for="pointiness">Pointiness (1-10)</label>
@@ -27,47 +55,56 @@
     <div class="loading">
         <div class="hypnotic"></div>
         <style>
-        .hypnotic {
-        width: 56px;
-        height: 56px;
-        border: 2.2px solid #ffffff;
-        display: grid;
-        animation: hypnotic-q3fddx 4s infinite linear;
-        }
+            .hypnotic {
+                width: 56px;
+                height: 56px;
+                border: 2.2px solid #ffffff;
+                display: grid;
+                animation: hypnotic-q3fddx 4s infinite linear;
+            }
 
-        .hypnotic::before,
-        .hypnotic::after {
-        content: "";
-        grid-area: 1/1;
-        margin: auto;
-        width: 70.7%;
-        height: 70.7%;
-        border: 2.2px solid #ffffff;
-        animation: inherit;
-        }
+            .hypnotic::before,
+            .hypnotic::after {
+                content: "";
+                grid-area: 1/1;
+                margin: auto;
+                width: 70.7%;
+                height: 70.7%;
+                border: 2.2px solid #ffffff;
+                animation: inherit;
+            }
 
-        .hypnotic::after {
-        width: 50%;
-        height: 50%;
-        border: 2.2px solid #ffffff;
-        animation-duration: 2s;
-        }
+            .hypnotic::after {
+                width: 50%;
+                height: 50%;
+                border: 2.2px solid #ffffff;
+                animation-duration: 2s;
+            }
 
-        @keyframes hypnotic-q3fddx {
-        100% {
-            transform: rotate(1turn);
-        }
-        }
+            @keyframes hypnotic-q3fddx {
+                100% {
+                    transform: rotate(1turn);
+                }
+            }
         </style>
     </div>
-    <div class="chartcontainer">
-    <canvas id="chart1"></canvas>
-    <button class="downloadbutton" onClick="downloadImage()">Download Image</button>
-    <p>Was this website a fun moment in your day?</p>
-    <p>I am a starving artist</p>
-    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="frommountains" data-color="#080808" data-emoji=""  data-font="Poppins" data-text="BUY ME A COFFEE" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+    <div class="error-message">
+        <p>Something has gone horribly wrong. </p>
+        <p>Try once more for luck, and if it really doesn't work, send me an email at hello@michaelturvey.online</p>
 
-</div>
+    </div>
+    <div class="chartcontainer">
+        <canvas id="chart1"></canvas>
+        <button class="downloadbutton" onClick="downloadImage()">Download Image</button>
+        <p>Was this website a fun moment in your day?</p>
+        <p>I am a starving artist</p>
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+            data-name="bmc-button" data-slug="frommountains" data-color="#080808" data-emoji="" data-font="Poppins"
+            data-text="BUY ME A COFFEE" data-outline-color="#ffffff" data-font-color="#ffffff"
+            data-coffee-color="#FFDD00"></script>
+
+    </div>
 </body>
 <script src="app.js"></script>
+
 </html>

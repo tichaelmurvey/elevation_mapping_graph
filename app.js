@@ -3,8 +3,10 @@ coordInput = document.querySelector(".coords");
 scaleInput = document.querySelector(".scale");
 pointinessInput = document.querySelector(".pointiness");
 lodInput = document.querySelector(".lod");
-placenameField = document.querySelector(".placename");
-locationInput = document.querySelector(".location");
+placeSearchCoordInput = document.querySelector("#placesearch-coords");
+placeSearchLocationInput = document.querySelector("#placesearch-location");
+coordSearchCoordInput = document.querySelector("#coordsearch-coords");
+coordSearchLocationInput = document.querySelector("#coordsearch-location");
 
 //Chart.defaults.color = '#000';
 Chart.defaults.elements.point.pointStyle = false;
@@ -33,8 +35,10 @@ let elevationGrid = [];
 elevationButton.addEventListener("click", getElevationData);
 document.querySelector(".loading").style.display = "none";
 document.querySelector(".chartcontainer").style.display = "none";
+document.querySelector(".error-message").style.display = "none";
 
 async function getElevationData(){
+  document.querySelector(".error-message").style.display = "none";
     document.querySelector(".chartcontainer").style.display = "none";
     document.querySelector(".loading").style.display = "block";
     console.log("getting data");
@@ -42,7 +46,12 @@ async function getElevationData(){
     fetch(`http://localhost:3000/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
     //fetch("https://opentopodata-server-pfdy7ufylq-uc.a.run.app/v1/test-dataset?locations=45.464519215734654,-73.66560713719198|45.464519215734654,-73.53731965791152&samples=100")
         .then((response) => response.json())
-        .then((data) => updateGraph(data.results));
+        .then((data) => updateGraph(data.results))
+        .catch(err => {
+          document.querySelector(".loading").style.display = "none";     
+          document.querySelector(".error-message").style.display = "block";
+        })
+
 }
 
 function updateGraph(elevationGrid){
@@ -190,7 +199,7 @@ document.querySelector(".loading").style.display = "none";
       link.click();
     }
     
-    coordInput.onchange = function(){
+    coordSearchCoordInput.onchange = function(){
       updateLocation();
     }
 
@@ -198,33 +207,33 @@ document.querySelector(".loading").style.display = "none";
       updateLocation();
     }
 
-    locationInput.onchange = function(){
+    placeSearchLocationInput.onchange = function(){
       updateCoords();
     }
 
     async function updateLocation(){
-      let coords = coordInput.value.split(",")
+      let coords = coordSearchCoordInput.value.split(",")
       let locationData = await fetch(`https://geocode.maps.co/reverse?lat=${coords[0].trim()}&lon=${coords[1].trim()}`)
         .then((response) => response.json())
         .then(data => {return data})
       console.log(locationData);
       if(scaleInput.value < 10){
         console.log("hello world");
-        locationInput.value = locationData.address.suburb;
+        coordSearchLocationInput.value = locationData.address.suburb;
       } else if(scaleInput.value < 100){
-        locationInput.value = locationData.address.city;
+        coordSearchLocationInput.value = locationData.address.city;
       } else if(scaleInput.value < 1000){
-        locationInput.value = locationData.address.state;
+        coordSearchLocationInput.value = locationData.address.state;
       } else {
-        locationInput.value = locationData.address.country;
+        coordSearchLocationInput.value = locationData.address.country;
       }
     }
 
     async function updateCoords(){
-      let location = locationInput.value;
+      let location = placeSearchLocationInput.value;
       let locationData = await fetch(`https://geocode.maps.co/search?q=${location}`)
         .then((response) => response.json())
         .then( data => {return data[0]})
         console.log(locationData)
-      coordInput.value = `${locationData.lat},${locationData.lon}`
+      placeSearchCoordInput.value = `${locationData.lat},${locationData.lon}`
     }
