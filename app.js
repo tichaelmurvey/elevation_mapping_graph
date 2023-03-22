@@ -169,7 +169,7 @@ document.querySelector(".loading").style.display = "none";
     
 
 
-    getFontSize = function (text, targetWidth, font) { 
+    function getFontSize(text, targetWidth, font) { 
       console.log(text, targetWidth, font);
       var c = document.querySelector("canvas");
       var ctx = c.getContext("2d");
