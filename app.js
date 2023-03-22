@@ -198,6 +198,10 @@ document.querySelector(".loading").style.display = "none";
       updateLocation();
     }
 
+    locationInput.onchange = function(){
+      updateCoords();
+    }
+
     async function updateLocation(){
       let coords = coordInput.value.split(",")
       let locationData = await fetch(`https://geocode.maps.co/reverse?lat=${coords[0].trim()}&lon=${coords[1].trim()}`)
@@ -214,4 +218,13 @@ document.querySelector(".loading").style.display = "none";
       } else {
         locationInput.value = locationData.address.country;
       }
+    }
+
+    async function updateCoords(){
+      let location = locationInput.value;
+      let locationData = await fetch(`https://geocode.maps.co/search?q=${location}`)
+        .then((response) => response.json())
+        .then( data => {return data[0]})
+        console.log(locationData)
+      coordInput.value = `${locationData.lat},${locationData.lon}`
     }
