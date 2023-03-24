@@ -38,10 +38,15 @@ document.querySelector(".chartcontainer").style.display = "none";
 document.querySelector(".error-message").style.display = "none";
 
 async function getElevationData(){
+  //Change display to loading
   document.querySelector(".error-message").style.display = "none";
-    document.querySelector(".chartcontainer").style.display = "none";
-    document.querySelector(".loading").style.display = "block";
-    console.log("getting data");
+  document.querySelector(".chartcontainer").style.display = "none";
+  document.querySelector(".loading").style.display = "block";
+  console.log("getting data");
+
+  //Select appropriate input box
+  
+
     //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
     fetch(`http://localhost:3000/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
     //fetch("https://opentopodata-server-pfdy7ufylq-uc.a.run.app/v1/test-dataset?locations=45.464519215734654,-73.66560713719198|45.464519215734654,-73.53731965791152&samples=100")

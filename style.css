@@ -97,3 +97,15 @@ canvas {
 .downloadbutton {
   margin-bottom: 50px;
 }
+
+.selectors {
+  display: flex;
+  justify-content: space-around;
+}
+
+.selectors > div {
+  border: 1px solid white;
+  padding: 20px;
+  flex: 1 1 0px;
+  margin: 20px;
+}

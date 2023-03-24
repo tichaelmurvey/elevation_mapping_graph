@@ -28,6 +28,7 @@
                 <option>Toronto</option>
                 <option>London</option>
             </select>
+            <button class="getElevation" id="button-elevation-preset">Get elevation</button>
         </div>
         <div>
             <h2>Search using a place name</h2>
@@ -35,6 +36,9 @@
             <input type="text" class="location" name="location" id="placesearch-location">
             <label for="placesearch-coords">Coordinates</label>
             <input name="coords" type="text" class="coords" id="placesearch-coords">
+            <label for="placesearchscale">Scale (Kilometers)</label>
+            <input type="text" name="scale" class="scale" value="10" id="placesearchscale">        
+            <button class="getElevation" id="button-elevation-place">Get elevation</button>
 
         </div>
         <div>
@@ -43,15 +47,15 @@
             <input name="coords" type="text" class="coords" id="coordsearch-coords">
             <label for="coordsearch-location">Place name</label>
             <input type="text" class="location" name="location" id="coordsearch-location">
+            <label for="coordsearchscale">Scale (Kilometers)</label>
+            <input type="text" name="coordsearchscale" class="scale" value="10" id="coordsearchscale">   
+            <button class="getElevation" id="button-elevation-coords">Get elevation</button>     
         </div>
     </div>
-    <label for="scale">Scale (Kilometers)</label>
-    <input type="text" name="scale" class="scale" value="10">
     <label for="pointiness">Pointiness (1-10)</label>
     <input type="text" class="pointiness" name="pointiness" value="5">
     <label for="lod">Level of detail (0-100)</label>
     <input type="text" name="lod" class="lod" value="20">
-    <button class="getElevation">Get elevation</button>
     <div class="loading">
         <div class="hypnotic"></div>
         <style>
