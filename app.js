@@ -7,6 +7,7 @@ let placeScaleInput = document.querySelector("#placesearch-scale")
 let coordSearchCoordInput = document.querySelector("#coordsearch-coords");
 let coordSearchLocationInput = document.querySelector("#coordsearch-location");
 let coordScaleInput = document.querySelector("#coordsearch-scale");
+let presetInput = document.querySelector("#presets");
 let activeTab;
 
 //Chart.defaults.color = '#000';
@@ -45,9 +46,14 @@ async function getElevationData(evt){
   console.log("getting data");
 
   //Select appropriate input box
-  let coordInput, placeInput;
+  let coordInput, placeInput, distance;
   if(activeTab === "preset"){
-    //TODO - write preset data file
+    //set coordinput, placeinput, and distance to match the values from the relevant preset object
+    let preset = presetInput.value;
+    let presetObj = presets.find(presetObj => presetObj.id == preset);
+    coordInput = presetObj.coords;
+    placeInput = presetObj.name;
+    distance = presetObj.scale*1000;
   } else if(activeTab === "placename"){
     coordInput = placeSearchCoordInput.value;
     placeInput = placeSearchCoordInput;
@@ -57,7 +63,9 @@ async function getElevationData(evt){
     placeInput = coordSearchLocationInput.value;
     distance = coordScaleInput.value*1000;
   }
-
+  console.log("coordinput", coordInput);
+  console.log("placeinput", placeInput);
+  console.log("distance", distance);
     //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
     fetch(`http://localhost:3000/api/grid?originalcoords=${coordInput}&distance=${distance}&lod=${lodInput.value}`)
     //fetch("https://opentopodata-server-pfdy7ufylq-uc.a.run.app/v1/test-dataset?locations=45.464519215734654,-73.66560713719198|45.464519215734654,-73.53731965791152&samples=100")
@@ -265,6 +273,7 @@ document.querySelector(".loading").style.display = "none";
       }
     }
 
+
     function openTab(evt, tabname) {
       // Declare all variables
       var i, tabcontent, tablinks;
@@ -287,3 +296,155 @@ document.querySelector(".loading").style.display = "none";
       evt.currentTarget.className += " active";
     }
     
+    let presets = [
+      {
+        name: "Mount Everest",
+        id: "everest",
+        coords: ["27.988056","86.925278"],
+        scale: 100,
+        lod: 50,
+        pointiness: 8
+      },
+      {
+        name: "The Grand Canyon",
+        id: "grandcanyon",
+        coords: ["36.09975912925134","-112.11154015570096"],
+        scale: 50,
+        lod: 50,
+        pointiness: 5
+      },
+      {
+        name: "Tokyo",
+        id: "tokyo",
+        coords: ["35.6894875","139.6917064"],
+        scale: 100,
+        lod: 50,
+        pointiness: 3
+      },
+      // write objects for 15 locations with interesting topography
+      // name, id, coords, scale, lod, pointiness
+ 
+      {
+        name: "Mount Fuji",
+        id: "fuji",
+        coords: ["35.360556","138.727778"],
+        scale: 50,
+        lod: 50,
+        pointiness: 8
+      },
+      {
+        name: "Mount Kilimanjaro",
+        id: "kilimanjaro",
+        coords: ["-3.067417","37.353611"],
+        scale: 100,
+        lod: 50,
+        pointiness: 8
+      },
+      //Do a city now
+      {
+        name: "London",
+      id: "london",
+      coords: ["51.507222","-0.1275"],
+      scale: 100,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "Paris",
+      id: "paris",
+      coords: ["48.856667","2.350987"],
+      scale: 100,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "Sydney",
+      id: "sydney",
+      coords: ["-33.8688197","151.2092955"],
+      scale: 100,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "Cape Town",
+      id: "capetown",
+      coords: ["-33.924869","18.424055"],
+      scale: 100,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "New York City",
+      id: "nyc",
+      coords: ["40.7127753","-74.0059728"],
+      //scale shoudl be the width of the metro area
+      scale: 184,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "San Francisco",
+      id: "sanfran",
+      coords: ["37.7749295","-122.4194155"],
+      scale: 120,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "Rio de Janeiro",
+      id: "rio",
+      coords: ["-22.9068467","-43.1728965"],
+      scale: 100,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "Cape Town",
+      id: "capetown",
+      coords: ["-33.924869","18.424055"],
+      scale: 100,
+      lod: 50,
+      pointiness: 3
+    },
+    //Some geogrpahic features that aren't mountains
+    {
+      name: "The Amazon River",
+      id: "amazon",
+      coords: ["-3.4166667","-65.85"],
+      scale: 1000,
+      lod: 50,
+      pointiness: 3
+    },
+    {
+      name: "The Alps",
+      id: "alps",
+      coords: ["45.75","7.00"],
+      scale: 100,
+      lod: 50,
+      pointiness: 3
+    },
+    ]
+
+    //When the page loads, add each preset as an option element in the select element with id "presets"
+    window.addEventListener("load", function(){
+      let presetsSelect = document.querySelector("#presets");
+      for(let preset of presets){
+        let option = document.createElement("option");
+        option.value = preset.id;
+        option.innerHTML = preset.name;
+        presetsSelect.appendChild(option);
+      }
+    });
+
+        //When the user changes the preset input, update the pointiness and scale to match the object
+        presetInput.onchange = function(){
+          let preset = presetInput.value;
+          console.log(preset);
+          for(let i = 0; i < presets.length; i++){
+            if(presets[i].id == preset){
+              pointinessInput.value = presets[i].pointiness;
+              lodInput.value = presets[i].lod;
+              break;
+            }
+          }
+        }
