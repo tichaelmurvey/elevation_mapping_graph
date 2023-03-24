@@ -98,14 +98,39 @@ canvas {
   margin-bottom: 50px;
 }
 
-.selectors {
+.tab {
+  overflow: hidden;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  border: 1px solid white;
+  width: max-content;
+  margin: auto;
+
 }
 
-.selectors > div {
-  border: 1px solid white;
-  padding: 20px;
-  flex: 1 1 0px;
-  margin: 20px;
+.tab button {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+.tab button.active {
+  background-color: white;
+  color: black
+}
+
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
 }

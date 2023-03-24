@@ -1,12 +1,12 @@
-elevationButton = document.querySelector(".getElevation");
-coordInput = document.querySelector(".coords");
-scaleInput = document.querySelector(".scale");
-pointinessInput = document.querySelector(".pointiness");
-lodInput = document.querySelector(".lod");
-placeSearchCoordInput = document.querySelector("#placesearch-coords");
-placeSearchLocationInput = document.querySelector("#placesearch-location");
-coordSearchCoordInput = document.querySelector("#coordsearch-coords");
-coordSearchLocationInput = document.querySelector("#coordsearch-location");
+let elevationButton = document.querySelectorAll(".getElevation");
+let pointinessInput = document.querySelector(".pointiness");
+let lodInput = document.querySelector(".lod");
+let placeSearchCoordInput = document.querySelector("#placesearch-coords");
+let placeSearchLocationInput = document.querySelector("#placesearch-location");
+let placeScaleInput = document.querySelector("#placesearch-scale")
+let coordSearchCoordInput = document.querySelector("#coordsearch-coords");
+let coordSearchLocationInput = document.querySelector("#coordsearch-location");
+let coordScaleInput = document.querySelector("#coordsearch-scale")
 
 //Chart.defaults.color = '#000';
 Chart.defaults.elements.point.pointStyle = false;
@@ -32,12 +32,11 @@ let heightScale = 10;
 let myChart;
 let elevationGrid = [];
 
-elevationButton.addEventListener("click", getElevationData);
 document.querySelector(".loading").style.display = "none";
 document.querySelector(".chartcontainer").style.display = "none";
 document.querySelector(".error-message").style.display = "none";
 
-async function getElevationData(){
+async function getElevationData(evt){
   //Change display to loading
   document.querySelector(".error-message").style.display = "none";
   document.querySelector(".chartcontainer").style.display = "none";
@@ -45,10 +44,21 @@ async function getElevationData(){
   console.log("getting data");
 
   //Select appropriate input box
-  
+  let coordInput, placeInput;
+  if(evt.target.id === "button-elevation-preset"){
+    //TODO - write preset data file
+  } else if(evt.target.id === "button-elevation-place"){
+    coordInput = placeSearchCoordInput.value;
+    placeInput = placeSearchCoordInput;
+    scaleInput = placeScaleInput.value;
+  } else if(evt.target.id === "button-elevation-coords"){
+    coordInput = coordSearchCoordInput.value;
+    placeInput = coordSearchLocationInput.value;
+    scaleInput = coordScaleInput.value;
+  }
 
     //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
-    fetch(`http://localhost:3000/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
+    fetch(`http://localhost:3000/api/grid?originalcoords=${coordInput}&distance=${scaleInput*1000}&lod=${lodInput.value}`)
     //fetch("https://opentopodata-server-pfdy7ufylq-uc.a.run.app/v1/test-dataset?locations=45.464519215734654,-73.66560713719198|45.464519215734654,-73.53731965791152&samples=100")
         .then((response) => response.json())
         .then((data) => updateGraph(data.results))
@@ -88,7 +98,9 @@ function updateGraph(elevationGrid){
      let locationSteepness = highestPoint - lowestPoint; 
      //Set height modification so that the percentage of space occupied matches the steepness
      let percentageMountain = (pointinessInput.value/2.5)/10;
+     console.log("percentage mountain", percentageMountain)
      heightScale = (percentageMountain*distance)/locationSteepness
+     console.log("heightscale", heightScale);
      //lineOffset = lineOffset*heightScale;
      //Scale the elevation from the base point (lowest)
      let elevationGraphScaled = elevationGraphData.map(line => {
@@ -102,7 +114,7 @@ function updateGraph(elevationGrid){
             return newPoint;
         })
      })
-     console.log(elevationGraphScaled);
+     console.log("scaled", elevationGraphScaled);
 
     //Add the offset to stagger lines
     let elevationGraphStaggered = elevationGraphScaled.map((line, lineIndex) => {
@@ -203,12 +215,16 @@ document.querySelector(".loading").style.display = "none";
       link.href = document.querySelector('canvas').toDataURL()
       link.click();
     }
+
+  elevationButton.forEach((item) => {
+    item.addEventListener('click', getElevationData)
+  });
     
     coordSearchCoordInput.onchange = function(){
       updateLocation();
     }
 
-    scaleInput.onchange = function(){
+    coordScaleInput.onchange = function(){
       updateLocation();
     }
 
@@ -242,3 +258,25 @@ document.querySelector(".loading").style.display = "none";
         console.log(locationData)
       placeSearchCoordInput.value = `${locationData.lat},${locationData.lon}`
     }
+
+    function openTab(evt, tabname) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+    
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+    
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+    
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(tabname).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    

@@ -18,8 +18,13 @@
     <h1>Mountain maker</h1>
     <p>Make a cool topographic map of anywhere on earth</p>
     <p>for legal reasons it may or may not look like a certain album cover</p>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'preset')">Choose from pre-sets</button>
+        <button class="tablinks" onclick="openTab(event, 'placename')">Search a place name</button>
+        <button class="tablinks" onclick="openTab(event, 'coords')">Search coordinates</button>
+      </div>
     <div class="selectors">
-        <div>
+        <div id="preset" class="tabcontent">
             <h2>Choose from pre-set locations</h2>
             <select>
                 <option>New York City</option>
@@ -30,25 +35,25 @@
             </select>
             <button class="getElevation" id="button-elevation-preset">Get elevation</button>
         </div>
-        <div>
+        <div id="placename" class="tabcontent">
             <h2>Search using a place name</h2>
             <label for="placesearch-location">Place name</label>
             <input type="text" class="location" name="location" id="placesearch-location">
             <label for="placesearch-coords">Coordinates</label>
             <input name="coords" type="text" class="coords" id="placesearch-coords">
             <label for="placesearchscale">Scale (Kilometers)</label>
-            <input type="text" name="scale" class="scale" value="10" id="placesearchscale">        
+            <input type="text" name="scale" class="scale" value="10" id="placesearch-scale">        
             <button class="getElevation" id="button-elevation-place">Get elevation</button>
 
         </div>
-        <div>
+        <div id="coords" class="tabcontent">
             <h2>Search using coordinates</h2>
             <label for="coordsearch-coords">Coordinates</label>
             <input name="coords" type="text" class="coords" id="coordsearch-coords">
             <label for="coordsearch-location">Place name</label>
             <input type="text" class="location" name="location" id="coordsearch-location">
             <label for="coordsearchscale">Scale (Kilometers)</label>
-            <input type="text" name="coordsearchscale" class="scale" value="10" id="coordsearchscale">   
+            <input type="text" name="coordsearchscale" class="scale" value="10" id="coordsearch-scale">   
             <button class="getElevation" id="button-elevation-coords">Get elevation</button>     
         </div>
     </div>
