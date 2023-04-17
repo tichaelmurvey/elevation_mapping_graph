@@ -186,6 +186,7 @@ footer {
   footer a {
     width: 30px;
     margin: 0 20px;
+    text-align: center;
   }
    footer i {
       color: white;
