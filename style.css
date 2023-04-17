@@ -161,3 +161,32 @@ select {
 option {
   color: black;
 }
+
+footer {
+  
+	text-align: center;
+	background-color: black;
+	color: white;
+	border-top: 2px solid black;
+	/* position: absolute; */
+	width: 100%;
+	bottom: 0;
+
+}
+
+.footer-links {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+
+  }
+  footer a {
+    width: 30px;
+    margin: 0 20px;
+  }
+   footer i {
+      color: white;
+    }
