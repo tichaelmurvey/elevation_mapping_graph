@@ -7,7 +7,7 @@ body {
     text-align: center;
 }
 
-button, input {
+button, input, a {
     font-family: 'TeXGyreHeros', sans-serif;
     background: none;
     border: 2px solid white;
@@ -20,6 +20,13 @@ button, input {
     padding: 12px;
     margin-bottom: 20px;
     text-align: center;
+    width: fit-content;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button:hover, input:hover, a:hover {
+    box-shadow: 0 0 0 2px white;
 }
 
 h1 {
@@ -92,6 +99,7 @@ canvas {
     border: 2px solid white !important;
     border-radius: 6px !important;
     font-weight: normal !important;
+    margin-bottom: 20px !important;
   }
 
 .downloadbutton {
@@ -148,7 +156,6 @@ select {
   padding: 12px;
   margin-bottom: 20px;
   text-align: center;
-
 }
 
 option {
