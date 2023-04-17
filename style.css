@@ -184,9 +184,9 @@ footer {
 
   }
   footer a {
-    width: 30px;
+    border: none;
     margin: 0 20px;
-    text-align: center;
+    
   }
    footer i {
       color: white;
