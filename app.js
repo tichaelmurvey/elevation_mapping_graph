@@ -309,9 +309,9 @@ document.querySelector(".loading").style.display = "none";
       {
         name: "The Grand Canyon",
         id: "grandcanyon",
-        coords: ["36.09975912925134","-112.11154015570096"],
-        scale: 50,
-        lod: 50,
+        coords: ["36.13182226854804","-111.97123914864754"],
+        scale: 100,
+        lod: 70,
         pointiness: 5
       },
       {
@@ -321,10 +321,7 @@ document.querySelector(".loading").style.display = "none";
         scale: 100,
         lod: 50,
         pointiness: 3
-      },
-      // write objects for 15 locations with interesting topography
-      // name, id, coords, scale, lod, pointiness
- 
+      }, 
       {
         name: "Mount Fuji",
         id: "fuji",
@@ -367,14 +364,6 @@ document.querySelector(".loading").style.display = "none";
       pointiness: 3
     },
     {
-      name: "Cape Town",
-      id: "capetown",
-      coords: ["-33.924869","18.424055"],
-      scale: 100,
-      lod: 50,
-      pointiness: 3
-    },
-    {
       name: "New York City",
       id: "nyc",
       coords: ["40.7127753","-74.0059728"],
@@ -399,14 +388,6 @@ document.querySelector(".loading").style.display = "none";
       lod: 50,
       pointiness: 3
     },
-    {
-      name: "Cape Town",
-      id: "capetown",
-      coords: ["-33.924869","18.424055"],
-      scale: 100,
-      lod: 50,
-      pointiness: 3
-    },
     //Some geogrpahic features that aren't mountains
     {
       name: "The Amazon River",
@@ -419,10 +400,10 @@ document.querySelector(".loading").style.display = "none";
     {
       name: "The Alps",
       id: "alps",
-      coords: ["45.75","7.00"],
-      scale: 100,
-      lod: 50,
-      pointiness: 3
+      coords: ["46.42208310951177","9.931870431505684"],
+      scale: 1000,
+      lod: 70,
+      pointiness: 4
     },
     ]
 
