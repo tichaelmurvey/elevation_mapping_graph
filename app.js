@@ -9,7 +9,8 @@ let coordSearchLocationInput = document.querySelector("#coordsearch-location");
 let coordScaleInput = document.querySelector("#coordsearch-scale");
 let presetInput = document.querySelector("#presets");
 let activeTab;
-let source = "https://topo-redirect.onrender.com/api/grid";
+//let source = "https://topo-redirect.onrender.com/api/grid";
+let source = "http://localhost:3000/proxy";
 
 //Chart.defaults.color = '#000';
 Chart.defaults.elements.point.pointStyle = false;
@@ -67,11 +68,16 @@ async function getElevationData(evt){
   console.log("coordinput", coordInput);
   console.log("placeinput", placeInput);
   console.log("distance", distance);
+  console.log("lod", lodInput.value);	
     //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
-    fetch(`${source}?originalcoords=${coordInput}&distance=${distance}&lod=${lodInput.value}`)
+    fetch(`${source}?coords=${coordInput}&distance=${distance}&lod=${lodInput.value}`)
     //fetch("https://opentopodata-server-pfdy7ufylq-uc.a.run.app/v1/test-dataset?locations=45.464519215734654,-73.66560713719198|45.464519215734654,-73.53731965791152&samples=100")
         .then((response) => response.json())
-        .then((data) => updateGraph(data.results, distance, placeInput))
+        .then((data) => {
+          console.log(data);
+          return data;
+        })
+        .then((data) => updateGraph(data, distance, placeInput))
         .catch(err => {
           document.querySelector(".loading").style.display = "none";     
           document.querySelector(".error-message").style.display = "block";
@@ -86,13 +92,6 @@ function updateGraph(elevationGrid, distance, placeName){
 
     console.log("data ", elevationGrid);
     let elevationGraphData = structuredClone(elevationGrid);
-    elevationGraphData = elevationGrid.map(line => {
-        //return line.results;s
-        return line.results.map(point => {
-            return point.elevation;
-            //return 12;
-        })
-     })
      console.log("elevation grid ", elevationGraphData);
 
      lowestPoint = 100000;
