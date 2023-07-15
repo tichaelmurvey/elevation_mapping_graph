@@ -8,9 +8,11 @@ let coordSearchCoordInput = document.querySelector("#coordsearch-coords");
 let coordSearchLocationInput = document.querySelector("#coordsearch-location");
 let coordScaleInput = document.querySelector("#coordsearch-scale");
 let presetInput = document.querySelector("#presets");
+let tshirtButton = document.querySelector(".tshirt");
 let activeTab;
 //let source = "https://topo-redirect.onrender.com/api/grid";
-let source = "http://localhost:3000/proxy";
+//let source = "http://localhost:3000/proxy";
+let source = "http://137.184.47.28:3000/proxy";
 
 //Chart.defaults.color = '#000';
 Chart.defaults.elements.point.pointStyle = false;
@@ -35,6 +37,7 @@ const canvasbackground = {
 let heightScale = 10;
 let myChart;
 let elevationGrid = [];
+let lines = 20;
 
 document.querySelector(".loading").style.display = "none";
 document.querySelector(".chartcontainer").style.display = "none";
@@ -69,9 +72,7 @@ async function getElevationData(evt){
   console.log("placeinput", placeInput);
   console.log("distance", distance);
   console.log("lod", lodInput.value);	
-    //fetch(`https://topo-redirect.onrender.com/api/grid?originalcoords=${coordInput.value}&distance=${scaleInput.value*1000}&lod=${lodInput.value}`)
-    fetch(`${source}?coords=${coordInput}&distance=${distance}&lod=${lodInput.value}`)
-    //fetch("https://opentopodata-server-pfdy7ufylq-uc.a.run.app/v1/test-dataset?locations=45.464519215734654,-73.66560713719198|45.464519215734654,-73.53731965791152&samples=100")
+    fetch(`${source}?coords=${coordInput}&distance=${distance}&lod=${lodInput.value}&lines=${lines}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -88,7 +89,7 @@ async function getElevationData(evt){
 
 function updateGraph(elevationGrid, distance, placeName){
     let numPoints = lodInput.value;
-    let lineOffset = distance/numPoints; //Distance between intervals for the purpose of graphing
+    let lineOffset = distance/lines; //Distance between intervals for the purpose of graphing
 
     console.log("data ", elevationGrid);
     let elevationGraphData = structuredClone(elevationGrid);
@@ -434,34 +435,35 @@ document.querySelector(".loading").style.display = "none";
 // Tshirt code
 // let tshirtButton = document.querySelector("#merch");
 
-// tshirtButton.addEventListener('click', (e) => {
-//   const apiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0ZWVtaWxsLmNvbSIsIm5iZiI6MTY4MTE1Njk0MSwiaWF0IjoxNjgxMTU2OTQxLCJzdWIiOjI4MDY5MywiZXhwIjo5OTk5OTk5OTk5OTksInV1aWQiOiI2NDM0NmI0ZDkyNDcxIiwidG9rZW5faWQiOjY2LCJjcmVhdGVkX2F0IjoxNjgxMTU2OTQxfQ.2WvsFzYGjfBlV1FOhesp7ze-BEnjeE0tw48Bx7ehafM'
-//   let canvas = document.querySelector("#chart1");
-//   const base64_image = canvas.toDataURL();
-//    // Set the fields to submit. image_url is the only required field for the API request. If you want, you can set the product name, description and price. You can also change the product type and colours using item_code and colours. To find an up-to-date list of available options for these fields, visit this endpoint: https://teemill.com/omnis/v3/product/options/
-//    const options = {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${apiKey}`,
-//     },
-//     body: JSON.stringify({
-//       image_url: base64_image,
-//       item_code: "RNA1",
-//       name: "Doodle Tee",
-//       colours: "Black",
-//       description: "Check out this awesome doodle tee, printed on an organic cotton t-shirt in a renewable energy powered factory, created via the Teemill API.",
-//       price: 20.00,
-//     }),
-//   };
+function tshirt() {
+  const apiKey = 'JfqA7IxSznJiRYT8LhezvmSC5qfCgbunefZF5P3K'
+  let canvas = document.querySelector("#chart1");
+  const base64_image = canvas.toDataURL();
+   // Set the fields to submit. image_url is the only required field for the API request. If you want, you can set the product name, description and price. You can also change the product type and colours using item_code and colours. To find an up-to-date list of available options for these fields, visit this endpoint: https://teemill.com/omnis/v3/product/options/
+   const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      image_url: base64_image,
+      item_code: "RNA1",
+      name: "Doodle Tee",
+      colours: "Black",
+      description: "Check out this awesome doodle tee, printed on an organic cotton t-shirt in a renewable energy powered factory, created via the Teemill API.",
+      price: 20.00,
+    }),
+  };
   
-//   // Open a new tab, ready to receive the product URL
-//   var newTab = window.open('about:blank', '_blank');
-//   newTab.document.write("Loading...");
+  // Open a new tab, ready to receive the product URL
+  var newTab = window.open('about:blank', '_blank');
+  newTab.document.write("Loading...");
 
-//   // Send the API request, and redirect the new tab to the URL that is returned
-//   fetch('https://teemill.com/omnis/v3/product/create', options)
-//     .then(response => response.json())
-//     .then(response => newTab.location.href = response.url)
-//     .catch(err => console.error(err));
-// });
+  // Send the API request, and redirect the new tab to the URL that is returned
+  fetch('https://teemill.com/omnis/v3/product/create', options)
+    .then(response => response.json())
+    .then(response => newTab.location.href = response.url)
+    .catch(err => console.error(err));
+}
+
