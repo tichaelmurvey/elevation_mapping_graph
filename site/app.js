@@ -12,9 +12,7 @@ let tshirtButton = document.querySelector(".tshirt");
 let activeTab;
 //let source = "https://topo-redirect.onrender.com/api/grid";
 //let source = "http://localhost:3000/proxy";
-let source = "http://137.184.47.28:3000/proxy";
-
-//Chart.defaults.color = '#000';
+let source = "http://localhost:3000/";
 Chart.defaults.elements.point.pointStyle = false;
 Chart.defaults.elements.line.tension = 0.3;
 Chart.defaults.elements.line.borderWidth = 1;
@@ -72,7 +70,7 @@ async function getElevationData(evt){
   console.log("placeinput", placeInput);
   console.log("distance", distance);
   console.log("lod", lodInput.value);	
-    fetch(`${source}?coords=${coordInput}&distance=${distance}&lod=${lodInput.value}&lines=${lines}`)
+    fetch(`${source}?location=${coordInput}&scale=${distance}&hlines=${lodInput.value}&vlines=${lines}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
